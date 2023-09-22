@@ -1,0 +1,110 @@
+<odoo>
+    <data>
+        <record id="action_patient" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="res_model">hms.patients</field>
+        </record>
+
+
+
+        <record id="view_patient_tree" model="ir.ui.view">
+
+            <field name="name">Patients</field>
+            <field name="model">hms.patients</field>
+
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                    <field name="address"/>
+                    <field name="age"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_patient_form" model="ir.ui.view">
+
+            <field name="name">Patients</field>
+            <field name="model">hms.patients</field>
+
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}"/>
+                        </header>
+                    <sheet>
+                        <notebook string="Patient info">
+                            <page string="Personal info">
+                                <group>
+                                    <field name="first_name" required="1"/>
+                                    <field name="last_name" required="1"/>
+                                    <field name="address"/>
+                                    <field name="birth_date"/>
+                                    <field name="age"/>
+                                    <field name="email"/>
+
+                                </group>
+                            </page>
+                            
+                            <page string="Medical info">
+                                <group>
+                                    <field name="history" attrs="{
+                                        'invisible': [('age', '&lt;', '50')]
+                                    }"/>
+
+
+                                    <field name="PCR" default="0"/>
+                                    <field name="cr_ratio" default='' attr="{
+                                        'required' : [('PCR','=','1')]
+                                    }"/>
+                                    <field name="blood_type"/>
+                                </group>
+                            </page>
+
+                            <page string="Hospital info">
+
+                                <group>
+                                    <field name="department_id" domain = "[('is_opened','=',True)]"/>
+                                    <field name="doctor_id" attrs="{
+                                        'readonly': [('department_id', '=', False)]
+                                    }" 
+                                    />
+
+                                    <!-- groups='hms_category.hms_group_manager'/> -->
+                                    <field name="department_capacity"/>
+                                </group>
+                            </page>
+
+                            <page string="Logs records">
+                                
+                                <field name="state_log">
+                                    <tree>
+                                    <field name="create_uid"/>
+                                    <field name="description"/>
+                                    <field name="create_date"/>
+                                    </tree>
+
+                                    
+                            </field>
+                            </page>
+                        </notebook>
+                       
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <menuitem id="hms_root_menu" name="HMS"/>
+        <menuitem id="hms_patient_data_menu" name="Patient" parent="hms_root_menu" action="action_patient"/>
+
+    </data>
+</odoo>
+
+
+

@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        
+        <record id="hms_customers_tree_view" model="ir.ui.view">
+            <field name="name">HMS Customers Inherit View Tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="phone" position="after">
+                    <field name="website"/>
+                </field>
+            </field>
+        </record>
+        
+        <record id="view_customer_form" model="ir.ui.view">
+
+            <field name="name">Customer</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//notebook/page[@name="sales_purchases"]//group//group[@name="misc"]' position ='inside'>
+                    <field name="related_patient_id"/>
+                </xpath>
+                <field name="vat" position="attributes">
+                    <attribute name="required">1</attribute>
+
+                </field>
+            </field>
+        </record>
+
+
+        
+
+        
+    </data>
+</odoo>
+
+
